@@ -1,4 +1,4 @@
-package model;
+package web.model;
 
 import org.springframework.format.annotation.NumberFormat;
 
@@ -13,7 +13,8 @@ public class User {
     public User() {
     }
 
-    public User(String name, String surname, int phoneNumber) {
+    public User(long id, String name, String surname, int phoneNumber) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;

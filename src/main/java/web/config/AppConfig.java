@@ -19,7 +19,7 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @EnableWebMvc
-@ComponentScan(basePackages = {"dao", "service","web","model"})
+@ComponentScan("web")
 public class AppConfig {
 
    private final Environment env;
