@@ -11,7 +11,6 @@ import web.service.UserService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
 public class UsersController {
 
     private static final String REDIRECT = "redirect:/users";
@@ -20,24 +19,29 @@ public class UsersController {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("")
+    public String helloPage () {
+        return "hello";
+    }
+
+    @GetMapping("/users")
     public String allUsers (Model model) {
         model.addAttribute("user", userService.getUserList());
         return "index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public String show (@PathVariable("id") long id, Model model){
         model.addAttribute("user", userService.findUserToID(id));
         return "show";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/users/new")
     public String newUser(@ModelAttribute("user") User user) {
         return "new";
     }
 
-    @PostMapping()
+    @PostMapping("/users")
     public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
             return "new";
@@ -45,13 +49,13 @@ public class UsersController {
         userService.add(user);
         return REDIRECT;
     }
-    @GetMapping("/{id}/edit")
+    @GetMapping("/users/{id}/edit")
     public String edit(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findUserToID(id));
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/users/{id}")
     public String update( @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "edit";
@@ -60,7 +64,7 @@ public class UsersController {
         return REDIRECT;
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.deleteUser(id);
         return REDIRECT;
